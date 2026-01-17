@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Tourism - Pure CSS Teaching Tool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&family=Barlow:wght@400;700&family=Bellefair&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ========================================
+           PURE CSS LAYER CONTROL SYSTEM
+           Uses radio buttons + :checked selector
+           Zero JavaScript required!
+           ======================================== */
+        
+        /* Hide radio button inputs */
+        input[type="radio"][name="layer"] {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        /* Default: Hide all layer styles */
+        body { 
+            margin: 0; 
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        /* ========================================
+           LAYER CONTROL UI - Pure CSS Toggle System
+           ======================================== */
+        
+        .layer-control-panel {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(20, 20, 30, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            max-width: 90vw;
+        }
+        
+        .layer-control-panel h3 {
+            color: #a5b4fc;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0 0 1rem 0;
+            text-align: center;
+        }
+        
+        .layer-buttons {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        
+        .layer-buttons label {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        
+        .layer-buttons label:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Active layer button styling */
+        #layer-0:checked ~ .layer-control-panel label[for="layer-0"],
+        #layer-1:checked ~ .layer-control-panel label[for="layer-1"],
+        #layer-2:checked ~ .layer-control-panel label[for="layer-2"],
+        #layer-3:checked ~ .layer-control-panel label[for="layer-3"],
+        #layer-4:checked ~ .layer-control-panel label[for="layer-4"],
+        #layer-5:checked ~ .layer-control-panel label[for="layer-5"],
+        #layer-6:checked ~ .layer-control-panel label[for="layer-6"],
+        #layer-7:checked ~ .layer-control-panel label[for="layer-7"] {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-color: #667eea;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .layer-info-display {
+            text-align: center;
+            padding: 0.75rem;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .layer-info-display .layer-name {
+            color: #fff;
+            font-family: 'Barlow', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: none;
+        }
+        
+        #layer-0:checked ~ .layer-control-panel .layer-name-0 { display: block; }
+        #layer-1:checked ~ .layer-control-panel .layer-name-1 { display: block; }
+        #layer-2:checked ~ .layer-control-panel .layer-name-2 { display: block; }
+        #layer-3:checked ~ .layer-control-panel .layer-name-3 { display: block; }
+        #layer-4:checked ~ .layer-control-panel .layer-name-4 { display: block; }
+        #layer-5:checked ~ .layer-control-panel .layer-name-5 { display: block; }
+        #layer-6:checked ~ .layer-control-panel .layer-name-6 { display: block; }
+        #layer-7:checked ~ .layer-control-panel .layer-name-7 { display: block; }
+        
+        .page-links {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .page-links a {
+            padding: 0.5rem 1rem;
+            background: rgba(102, 126, 234, 0.15);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 8px;
+            color: #a5b4fc;
+            text-decoration: none;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+        }
+        
+        .page-links a:hover {
+            background: rgba(102, 126, 234, 0.3);
+            border-color: rgba(102, 126, 234, 0.6);
+        }
+        
+        /* ========================================
+           LAYER 0: RAW HTML STYLES
+           ======================================== */
+        
+        #layer-0:checked ~ #content {
+            font-family: serif;
+            padding: 1rem;
+        }
+        
+        /* ========================================
+           LAYER 2: CSS RESET & BOX MODEL
+           ======================================== */
+        
+        #layer-2:checked ~ #content *,
+        #layer-3:checked ~ #content *,
+        #layer-4:checked ~ #content *,
+        #layer-5:checked ~ #content *,
+        #layer-6:checked ~ #content *,
+        #layer-7:checked ~ #content *,
+        #layer-2:checked ~ #content *::before,
+        #layer-3:checked ~ #content *::before,
+        #layer-4:checked ~ #content *::before,
+        #layer-5:checked ~ #content *::before,
+        #layer-6:checked ~ #content *::before,
+        #layer-7:checked ~ #content *::before,
+        #layer-2:checked ~ #content *::after,
+        #layer-3:checked ~ #content *::after,
+        #layer-4:checked ~ #content *::after,
+        #layer-5:checked ~ #content *::after,
+        #layer-6:checked ~ #content *::after,
+        #layer-7:checked ~ #content *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        #layer-2:checked ~ #content img,
+        #layer-3:checked ~ #content img,
+        #layer-4:checked ~ #content img,
+        #layer-5:checked ~ #content img,
+        #layer-6:checked ~ #content img,
+        #layer-7:checked ~ #content img {
+            max-width: 100%;
+            display: block;
+        }
+        
+        #layer-2:checked ~ #content button,
+        #layer-3:checked ~ #content button,
+        #layer-4:checked ~ #content button,
+        #layer-5:checked ~ #content button,
+        #layer-6:checked ~ #content button,
+        #layer-7:checked ~ #content button {
+            font: inherit;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+        }
+        
+        #layer-2:checked ~ #content a,
+        #layer-3:checked ~ #content a,
+        #layer-4:checked ~ #content a,
+        #layer-5:checked ~ #content a,
+        #layer-6:checked ~ #content a,
+        #layer-7:checked ~ #content a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        #layer-2:checked ~ #content ul,
+        #layer-3:checked ~ #content ul,
+        #layer-4:checked ~ #content ul,
+        #layer-5:checked ~ #content ul,
+        #layer-6:checked ~ #content ul,
+        #layer-7:checked ~ #content ul {
+            list-style: none;
+        }
+        
+        /* ========================================
+           LAYER 3: TYPOGRAPHY
+           ======================================== */
+        
+        #layer-3:checked ~ #content,
+        #layer-4:checked ~ #content,
+        #layer-5:checked ~ #content,
+        #layer-6:checked ~ #content,
+        #layer-7:checked ~ #content {
+            font-family: 'Barlow', sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        #layer-3:checked ~ #content h1,
+        #layer-4:checked ~ #content h1,
+        #layer-5:checked ~ #content h1,
+        #layer-6:checked ~ #content h1,
+        #layer-7:checked ~ #content h1,
+        #layer-3:checked ~ #content h2,
+        #layer-4:checked ~ #content h2,
+        #layer-5:checked ~ #content h2,
+        #layer-6:checked ~ #content h2,
+        #layer-7:checked ~ #content h2 {
+            font-family: 'Bellefair', serif;
+            font-weight: 400;
+            line-height: 1.1;
+        }
+        
+        #layer-3:checked ~ #content .fs-900,
+        #layer-4:checked ~ #content .fs-900,
+        #layer-5:checked ~ #content .fs-900,
+        #layer-6:checked ~ #content .fs-900,
+        #layer-7:checked ~ #content .fs-900 {
+            font-size: clamp(5rem, 10vw + 1rem, 9.375rem);
+        }
+        
+        #layer-3:checked ~ #content .fs-600,
+        #layer-4:checked ~ #content .fs-600,
+        #layer-5:checked ~ #content .fs-600,
+        #layer-6:checked ~ #content .fs-600,
+        #layer-7:checked ~ #content .fs-600 {
+            font-size: clamp(1rem, 2vw, 2rem);
+        }
+        
+        #layer-3:checked ~ #content .fs-500,
+        #layer-4:checked ~ #content .fs-500,
+        #layer-5:checked ~ #content .fs-500,
+        #layer-6:checked ~ #content .fs-500,
+        #layer-7:checked ~ #content .fs-500 {
+            font-size: clamp(1rem, 1.5vw, 1.75rem);
+        }
+        
+        #layer-3:checked ~ #content .uppercase,
+        #layer-4:checked ~ #content .uppercase,
+        #layer-5:checked ~ #content .uppercase,
+        #layer-6:checked ~ #content .uppercase,
+        #layer-7:checked ~ #content .uppercase {
+            text-transform: uppercase;
+        }
+        
+        #layer-3:checked ~ #content .letter-spacing-1,
+        #layer-4:checked ~ #content .letter-spacing-1,
+        #layer-5:checked ~ #content .letter-spacing-1,
+        #layer-6:checked ~ #content .letter-spacing-1,
+        #layer-7:checked ~ #content .letter-spacing-1 {
+            letter-spacing: 4.75px;
+        }
+        
+        #layer-3:checked ~ #content .letter-spacing-2,
+        #layer-4:checked ~ #content .letter-spacing-2,
+        #layer-5:checked ~ #content .letter-spacing-2,
+        #layer-6:checked ~ #content .letter-spacing-2,
+        #layer-7:checked ~ #content .letter-spacing-2 {
+            letter-spacing: 2.7px;
+        }
+        
+        /* ========================================
+           LAYER 4: COLORS & BACKGROUNDS
+           ======================================== */
+        
+        #layer-4:checked ~ #content,
+        #layer-5:checked ~ #content,
+        #layer-6:checked ~ #content,
+        #layer-7:checked ~ #content {
+            background-color: #0B0D17;
+            color: #FFFFFF;
+            min-height: 100vh;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect fill="%230B0D17"/><circle cx="20" cy="20" r="1.5" fill="%23fff" opacity="0.4"/><circle cx="60" cy="50" r="1" fill="%23fff" opacity="0.3"/><circle cx="120" cy="30" r="1.2" fill="%23fff" opacity="0.5"/><circle cx="170" cy="80" r="0.8" fill="%23fff" opacity="0.3"/><circle cx="90" cy="140" r="1.5" fill="%23fff" opacity="0.6"/><circle cx="40" cy="180" r="1" fill="%23fff" opacity="0.4"/><circle cx="150" cy="160" r="0.9" fill="%23fff" opacity="0.3"/></svg>');
+            background-size: 300px 300px;
+        }
+        
+        #layer-4:checked ~ #content .text-light,
+        #layer-5:checked ~ #content .text-light,
+        #layer-6:checked ~ #content .text-light,
+        #layer-7:checked ~ #content .text-light {
+            color: #D0D6F9;
+        }
+        
+        #layer-4:checked ~ #content .explore-btn,
+        #layer-5:checked ~ #content .explore-btn,
+        #layer-6:checked ~ #content .explore-btn,
+        #layer-7:checked ~ #content .explore-btn {
+            background-color: #FFFFFF;
+            color: #0B0D17;
+        }
+        
+        /* ========================================
+           LAYER 5: FLEXBOX LAYOUT
+           ======================================== */
+        
+        #layer-5:checked ~ #content,
+        #layer-6:checked ~ #content,
+        #layer-7:checked ~ #content {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #layer-5:checked ~ #content .primary-header,
+        #layer-6:checked ~ #content .primary-header,
+        #layer-7:checked ~ #content .primary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 3rem;
+        }
+        
+        #layer-5:checked ~ #content .primary-nav ul,
+        #layer-6:checked ~ #content .primary-nav ul,
+        #layer-7:checked ~ #content .primary-nav ul {
+            display: flex;
+            gap: 3rem;
+        }
+        
+        #layer-5:checked ~ #content .nav-link,
+        #layer-6:checked ~ #content .nav-link,
+        #layer-7:checked ~ #content .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 2.7px;
+            text-transform: uppercase;
+        }
+        
+        #layer-5:checked ~ #content main,
+        #layer-6:checked ~ #content main,
+        #layer-7:checked ~ #content main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 3rem;
+        }
+        
+        #layer-5:checked ~ #content .home-content,
+        #layer-6:checked ~ #content .home-content,
+        #layer-7:checked ~ #content .home-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex: 1;
+            gap: 4rem;
+            padding: 0 clamp(2rem, 8vw, 8rem);
+        }
+        
+        #layer-5:checked ~ #content .home-text,
+        #layer-6:checked ~ #content .home-text,
+        #layer-7:checked ~ #content .home-text {
+            flex: 1;
+            max-width: 450px;
+        }
+        
+        #layer-5:checked ~ #content .home-text p,
+        #layer-6:checked ~ #content .home-text p,
+        #layer-7:checked ~ #content .home-text p {
+            margin-top: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        #layer-5:checked ~ #content .explore-btn-wrapper,
+        #layer-6:checked ~ #content .explore-btn-wrapper,
+        #layer-7:checked ~ #content .explore-btn-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        
+        /* ========================================
+           LAYER 6: POSITION
+           ======================================== */
+        
+        #layer-6:checked ~ #content .primary-header,
+        #layer-7:checked ~ #content .primary-header {
+            position: relative;
+        }
+        
+        #layer-6:checked ~ #content .primary-header::after,
+        #layer-7:checked ~ #content .primary-header::after {
+            content: '';
+            position: absolute;
+            left: 10rem;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        
+        #layer-6:checked ~ #content .primary-nav,
+        #layer-7:checked ~ #content .primary-nav {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(40px);
+            padding: 2rem 3rem;
+        }
+        
+        #layer-6:checked ~ #content .nav-link,
+        #layer-7:checked ~ #content .nav-link {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+        
+        #layer-6:checked ~ #content .nav-link::after,
+        #layer-7:checked ~ #content .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #FFFFFF;
+            transform: scaleX(0);
+        }
+        
+        #layer-6:checked ~ #content .nav-link:first-child::after,
+        #layer-7:checked ~ #content .nav-link:first-child::after {
+            transform: scaleX(1);
+        }
+        
+        #layer-6:checked ~ #content .explore-btn,
+        #layer-7:checked ~ #content .explore-btn {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            place-items: center;
+            width: clamp(150px, 20vw, 274px);
+            aspect-ratio: 1;
+            border-radius: 50%;
+        }
+        
+        #layer-6:checked ~ #content .explore-btn::after,
+        #layer-7:checked ~ #content .explore-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: -1;
+            opacity: 0;
+        }
+        
+        /* ========================================
+           LAYER 7: POLISH & RESPONSIVE
+           ======================================== */
+        
+        #layer-7:checked ~ #content .nav-link {
+            transition: opacity 0.3s ease;
+        }
+        
+        #layer-7:checked ~ #content .nav-link:hover {
+            opacity: 0.7;
+        }
+        
+        #layer-7:checked ~ #content .nav-link::after {
+            transition: transform 0.3s ease;
+        }
+        
+        #layer-7:checked ~ #content .nav-link:hover::after {
+            transform: scaleX(0.5);
+            background: rgba(255, 255, 255, 0.5);
+        }
+        
+        #layer-7:checked ~ #content .explore-btn {
+            transition: transform 0.3s ease;
+        }
+        
+        #layer-7:checked ~ #content .explore-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        #layer-7:checked ~ #content .explore-btn::after {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        #layer-7:checked ~ #content .explore-btn:hover::after {
+            opacity: 1;
+            transform: scale(1.5);
+        }
+        
+        @media (max-width: 768px) {
+            #layer-7:checked ~ #content .home-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            #layer-7:checked ~ #content .explore-btn-wrapper {
+                justify-content: center;
+            }
+            
+            #layer-7:checked ~ #content .primary-nav ul {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .layer-control-panel {
+                padding: 1rem;
+                min-width: 0;
+            }
+            
+            .layer-buttons {
+                gap: 0.25rem;
+            }
+            
+            .layer-buttons label {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.65rem;
+            }
+            
+            .page-links {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Pure CSS Layer Control: Radio inputs -->
+    <input type="radio" name="layer" id="layer-0">
+    <input type="radio" name="layer" id="layer-1">
+    <input type="radio" name="layer" id="layer-2">
+    <input type="radio" name="layer" id="layer-3">
+    <input type="radio" name="layer" id="layer-4">
+    <input type="radio" name="layer" id="layer-5">
+    <input type="radio" name="layer" id="layer-6">
+    <input type="radio" name="layer" id="layer-7" checked>
+    
+    <!-- Main Content -->
+    <div id="content">
+        <header class="primary-header">
+            <div class="logo">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="24" fill="white"/>
+                    <circle cx="24" cy="24" r="12" fill="#0B0D17"/>
+                </svg>
+            </div>
+            
+            <nav class="primary-nav">
+                <ul>
+                    <li>
+                        <a href="#home" class="nav-link">
+                            <span style="font-weight: 700;">00</span>
+                            <span>HOME</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#destination" class="nav-link">
+                            <span style="font-weight: 700;">01</span>
+                            <span>DESTINATION</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#crew" class="nav-link">
+                            <span style="font-weight: 700;">02</span>
+                            <span>CREW</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#technology" class="nav-link">
+                            <span style="font-weight: 700;">03</span>
+                            <span>TECHNOLOGY</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main>
+            <div class="home-content">
+                <section class="home-text">
+                    <h5 class="text-light fs-500 letter-spacing-1 uppercase">
+                        SO, YOU WANT TO TRAVEL TO
+                    </h5>
+                    
+                    <h1 class="fs-900 uppercase">
+                        SPACE
+                    </h1>
+                    
+                    <p class="text-light">
+                        Let's face it; if you want to go to space, you might as well genuinely go to
+                        outer space and not hover kind of on the edge of it. Well sit back, and relax
+                        because we'll give you a truly out of this world experience!
+                    </p>
+                </section>
+                
+                <div class="explore-btn-wrapper">
+                    <button class="explore-btn">
+                        <span class="fs-600 uppercase">EXPLORE</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
